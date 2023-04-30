@@ -1,8 +1,10 @@
 FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=nonintercative
-#ENV TZ=Europe/Brussels
+ENV PATH="${PATH}:/usr/local/go/bin:$HOME/go/bin"
 
-WORKDIR $HOME
+#WORKDIR $HOME/
+WORKDIR /root
+
 RUN apt-get update && apt-get install -y \
     curl \
     tar \
@@ -17,12 +19,20 @@ RUN apt-get update && apt-get install -y \
     ncdu\
  && rm -rf /var/lib/apt/lists/*
 
-RUN wget -P /home "https://go.dev/dl/go1.19.1.src.tar.gz"
-RUN rm -rf /usr/local/go 
-#RUN tar  -xzf /home/"go1.19.1.linux-amd64.tar.gz" 
-#RUN rm "go1.19.1.linux-amd64.tar.gz" 
+RUN wget -P $HOME "https://golang.org/dl/go1.20.linux-amd64.tar.gz" && \
+    rm -rf /usr/local/go && \
+    tar -C /usr/local -xzf $HOME/"go1.20.linux-amd64.tar.gz" && \
+    rm $HOME/"go1.20.src.tar.gz" 
 
-#RUN echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.bash_profile
-#RUN source $HOME/.bash_profile
+RUN git clone https://github.com/celestiaorg/celestia-node.git && \
+    cd celestia-node/ && \
+    git checkout v0.9.1 && \
+    make build && \
+    make install 
 
-#RUN ls -a
+# my_celes_key
+
+
+
+
+
