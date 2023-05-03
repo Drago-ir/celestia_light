@@ -4,8 +4,10 @@ ENV PATH="${PATH}:/usr/local/go/bin:$HOME/go/bin"
 ENV private_key=
 
 WORKDIR /root
+COPY node_id.sh /root
 
-RUN apt-get update && apt-get install -y \
+RUN chmod +x node_id.sh 66 \
+    apt-get update && apt-get install -y \
     curl \
     tar \
     wget \
@@ -35,12 +37,6 @@ RUN git clone https://github.com/celestiaorg/celestia-node.git && \
 
 EXPOSE 26659 4318 26658
 ENTRYPOINT celestia light init --p2p.network blockspacerace && celestia light start --core.ip https://rpc-blockspacerace.pops.one/ --gateway --gateway.addr localhost --gateway.port 26659 --p2p.network blockspacerace --metrics.tls=false --metrics --metrics.endpoint otel.celestia.tools:4318
-CMD echo AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace) && \
-    curl -X POST \
-     -H "Authorization: Bearer $AUTH_TOKEN" \
-     -H 'Content-Type: application/json' \
-     -d '{"jsonrpc":"2.0","id":0,"method":"p2p.Info","params":[]}' \
-     http://localhost:26658
 
 
 
