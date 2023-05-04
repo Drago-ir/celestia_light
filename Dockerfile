@@ -2,11 +2,14 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=nonintercative
 ENV PATH="${PATH}:/usr/local/go/bin:$HOME/go/bin"
 ENV private_key=
+ENV ver=1.20.3
 
 WORKDIR /root
 COPY node_id.sh /root
+COPY pfb.sh /root
 
-RUN chmod +x node_id.sh 66 \
+RUN chmod +x node_id.sh && \
+    chmod +x pfb.sh && \
     apt-get update && apt-get install -y \
     curl \
     tar \
@@ -21,10 +24,10 @@ RUN chmod +x node_id.sh 66 \
     ncdu\
  && rm -rf /var/lib/apt/lists/*
 
-RUN wget -P $HOME "https://golang.org/dl/go1.20.linux-amd64.tar.gz" && \
+RUN wget -P $HOME "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
     rm -rf /usr/local/go && \
-    tar -C /usr/local -xzf $HOME/"go1.20.linux-amd64.tar.gz" && \
-    rm $HOME/"go1.20.linux-amd64.tar.gz" 
+    tar -C /usr/local -xzf $HOME/"go$ver.linux-amd64.tar.gz" && \
+    rm $HOME/"go$ver.linux-amd64.tar.gz" 
 
 RUN git clone https://github.com/celestiaorg/celestia-node.git && \
     cd celestia-node/ && \
