@@ -1,13 +1,13 @@
 # celestia_light
 Dockerfile to setup a light node
 
+# Node Id
+sudo docker exec -it $(sudo docker ps -aqf "ancestor=celes_light") node_id.sh
 
 # Play For Bob transaction
+Don´t forget to get test token
 ```
-docker exec -it $(docker ps -aqf "ancestor=celes_light") pfb.sh
-sudo docker exec -it $(sudo docker ps -aqf "ancestor=celes_light") sh
-
-sudo docker exec -it 996909e9be38 sh
-
-sudo docker ps -aqf "ancestor=celes_light"
+sudo docker exec -it $(sudo docker ps -aqf "ancestor=celes_light") pfb.sh
+sudo docker exec -it $(sudo docker ps -aqf "ancestor=celes_light") pfb.sh <namespace_id> <data>
 ```
+

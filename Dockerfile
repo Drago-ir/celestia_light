@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=nonintercative
-ENV PATH="${PATH}:/usr/local/go/bin:$HOME/go/bin"
+ENV PATH="${PATH}:/usr/local/go/bin:$HOME/go/bin:/root"
 ENV private_key=
 ENV ver=1.20.3
 
@@ -36,6 +36,7 @@ RUN git clone https://github.com/celestiaorg/celestia-node.git && \
     make install && \
     make cel-key && \
     cd
+
 
 
 EXPOSE 26659 4318 26658
