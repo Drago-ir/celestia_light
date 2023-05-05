@@ -1,0 +1,11 @@
+services:
+  celestia:
+    image: celes_light
+    command: celestia light start --core.ip https://rpc-blockspacerace.pops.one/ --gateway --gateway.addr localhost --gateway.port 26659 --p2p.network blockspacerace --metrics.tls=false --metrics --metrics.endpoint otel.celestia.tools:4318 --keyring.accname my_celes_key
+    volumes:
+      - ${PWD}/keys:/root/.celestia-light-blockspacerace-0/keys
+    ports:
+      - 26659:26659
+      - 4318:4318 
+      - 26658:26658
+      
